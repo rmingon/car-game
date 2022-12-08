@@ -7,7 +7,11 @@ import {WSService} from "./ws/ws.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'client';
-  constructor(private readonly wsService: WSService) {
+  type = ""
+  constructor(private readonly wsService: WSService) {}
+
+  newGame() {
+    this.wsService.subject.next({ message: 'some message' })
+    console.log("new game", this.type)
   }
 }
