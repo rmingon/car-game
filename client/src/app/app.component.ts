@@ -11,7 +11,9 @@ export class AppComponent {
   constructor(private readonly wsService: WSService) {}
 
   newGame() {
-    this.wsService.subject.next({ message: 'some message' })
-    console.log("new game", this.type)
+    this.wsService.subject.next({
+      command: 'NEW_GAME',
+      role: this.type
+    })
   }
 }
