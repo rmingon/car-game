@@ -14,20 +14,24 @@ export class Game {
       this.router = client
   }
 
-  addCar() {
+  addCar(): Game {
     this.cars.push(new Car())
+    return this
   }
 
-  getCars() {
+  addCars(nb: number): Game {
+    for(let i = 0; i <= nb; i++) {
+      this.addCar()
+    }
+    return this
+  }
+
+  getCars() : Car[] {
     return this.cars
   }
 
-  getCar(index: number) {
+  getCar(index: number) : Car | undefined {
     return this.cars.at(index)
   }
-
-
-
-
 
 }
