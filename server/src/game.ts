@@ -6,7 +6,7 @@ export class Game {
   sender: WebSocket | undefined
   router: WebSocket | undefined
 
-  id: string
+  id: string = ""
 
   state: "wait" | "play" = "wait"
 
@@ -19,18 +19,24 @@ export class Game {
     if (role === "ROUTER")
       this.setRouter(client)
     this.addCars(4)
-    this.id = id
+    this.setId(id)
   }
 
   setSender(client: WebSocket): Game {
     this.sender = client
-    this.sender.emit('rr',{id:this.id})
+    this.router && this.play()
     return this
   }
 
   setRouter(client: WebSocket): Game {
     this.router = client
+    this.sender && this.play()
     return this
+  }
+
+  public join(ws: WebSocket) {
+    this.sender || this.setSender(ws)
+    this.router || this.setRouter(ws)
   }
 
   addTrafficsLights(nb: number): Game {
@@ -69,4 +75,17 @@ export class Game {
     return this.cars.at(index)
   }
 
+  sendToPlayers(data: {} | []) {
+    this.sender && this.sender.send(JSON.stringify(data))
+    this.router && this.router.send(JSON.stringify(data))
+  }
+
+  private setId(id: string) {
+    this.id = id
+    this.sendToPlayers({id})
+  }
+
+  private play() {
+    this.sendToPlayers(this.cars)
+  }
 }
