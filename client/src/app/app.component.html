@@ -18,7 +18,7 @@
       <div class="flex ">
         <div class="bg-green-400 w-40 h-40 mr-6 rounded-br-xl mb-6">
           <div class="flex justify-end items-end">
-            <app-traffic-light></app-traffic-light>
+            <app-traffic-light [number]="1" [state]="'red'" (traffic)="setTrafficEvent($event)" ></app-traffic-light>
           </div>
         </div>
         <div class="border-2 border-white border-dashed"></div>
