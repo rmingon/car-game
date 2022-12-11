@@ -1,42 +1,38 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import { webSocket } from "rxjs/webSocket";
-import {filter, map, Observable, Subject, Subscribable} from "rxjs";
-
-interface Data {
-  id: string
-}
-
-interface Needs {
-  type: string,
-  needs: object[],
-  number_parties: number,
-}
+import {filter, map, Observable, pipe, Subject, Subscribable} from "rxjs";
+import {Id, Needs} from "../models/action";
 
 @Injectable({
   providedIn: 'root'
 })
-export class WSService {
+export class WSService implements OnInit {
   ws = webSocket<object>("ws://localhost:8080");
-  wsSubject = new Subject<object>()
   id: string = ""
 
-  needs: Observable<object> // TODO type needs
+  constructor() {}
 
-  constructor() {
-    this.ws.subscribe((data) => {
-      // console.log(data)
-      // @ts-ignore
-      if (data?.id) {
-        // @ts-ignore
-        this.id = data?.id
-      }
+  join(id: string) {
+    this.id = id
+    this.ws.next({
+      command: 'JOIN',
+      id
     })
+  }
 
-    this.needs = this.ws.pipe(filter(el => el.hasOwnProperty('needs')))
+  ngOnInit(): void {
+    this.ws
+      // @ts-ignore
+      .pipe(filter<Id>((el => el.type === 'id')))
+      .subscribe((next: Id) => {
+        this.id = next.id
+    })
+  }
 
-    this.wsSubject.subscribe((data) => {
-      const dataWithId = {...data, id: this.id}
-      this.ws.next(dataWithId)
+  newGame(type: string) {
+    this.ws.next({
+      command: 'NEW_GAME',
+      role: type
     })
   }
 }
