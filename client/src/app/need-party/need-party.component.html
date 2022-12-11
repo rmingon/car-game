@@ -1,3 +1,7 @@
-<div class="absolute bottom-0 left-0">
-
+<div class="absolute top-0 right-0">
+  <div *ngFor="let need of needs">
+    <span>
+      <button (click)="wsService.join(need.id)">a party need {{need.need}}</button>
+    </span><br>
+  </div>
 </div>
