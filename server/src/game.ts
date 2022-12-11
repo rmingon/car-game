@@ -1,91 +1,54 @@
+import {Party} from "./party";
+import {makeId} from "./utils";
 import {WebSocket} from "ws";
-import {Car} from "./car";
-import {TrafficLight} from "./traffic-light";
 
-export class Game {
-  sender: WebSocket | undefined
-  router: WebSocket | undefined
+class Game {
+  parties = new Map<String, Party>()
 
-  id: string = ""
-
-  state: "wait" | "play" = "wait"
-
-  protected cars: Car[] = []
-  protected traffics_lights : TrafficLight[] = []
-
-  constructor(role: string, client: WebSocket, id : string) {
-    if (role === "SENDER")
-      this.setSender(client)
-    if (role === "ROUTER")
-      this.setRouter(client)
-    this.addCars(4)
-    this.setId(id)
+  newGame(role: "SENDER" | "ROUTER", ws: WebSocket) {
+    const id = makeId(8)
+    this.parties.set(id, new Party(role, ws, id))
+    this.news()
   }
 
-  setSender(client: WebSocket): Game {
-    this.sender = client
-    this.router && this.play()
-    return this
+  join(id: string, ws: WebSocket) {
+    (this.parties.get(id))?.join(ws)
+    this.news()
   }
 
-  setRouter(client: WebSocket): Game {
-    this.router = client
-    this.sender && this.play()
-    return this
+  command(id: string, func: keyof Party, arg: object) {
+    if (!this.parties.has(id))
+      throw "ERROR";
+    // @ts-ignore
+    (this.parties.get(id))[func](arg)
   }
 
-  public join(ws: WebSocket) {
-    this.sender || this.setSender(ws)
-    this.router || this.setRouter(ws)
+  partyNeeds() : object[] {
+    let needs: object[] = [] // TODO needs interface
+    this.parties.forEach(party => {
+      if (party.needPlayer()) {
+        needs.push({
+          need: party.roleNeed(),
+          id: party.id
+        })
+      }
+    })
+    return needs
   }
 
-  addTrafficsLights(nb: number): Game {
-    for(let i = 0; i <= nb; i++) {
-      this.addTrafficLight()
-    }
-    return this
+  news() {
+    this.parties.forEach(party => {
+      party.sendToPlayers({
+        party_number: this.partyNumber(),
+        party_needs: this.partyNeeds()
+      })
+    })
   }
 
-  addTrafficLight(): Game {
-    this.traffics_lights.push(new TrafficLight())
-    return this
-  }
-
-  addCar(): Game {
-    this.cars.push(new Car())
-    return this
-  }
-
-  addCars(nb: number): Game {
-    for(let i = 0; i <= nb; i++) {
-      this.addCar()
-    }
-    return this
-  }
-
-  setTrafficLight({state, position}: {state: string, position: number}) {
-    console.log(state, position)
-  }
-
-  getCars() : Car[] {
-    return this.cars
-  }
-
-  getCar(index: number) : Car | undefined {
-    return this.cars.at(index)
-  }
-
-  sendToPlayers(data: {} | []) {
-    this.sender && this.sender.send(JSON.stringify(data))
-    this.router && this.router.send(JSON.stringify(data))
-  }
-
-  private setId(id: string) {
-    this.id = id
-    this.sendToPlayers({id})
-  }
-
-  private play() {
-    this.sendToPlayers(this.cars)
+  partyNumber() : number {
+    return this.parties.size
   }
 }
+
+// Singleton
+export default new Game()
