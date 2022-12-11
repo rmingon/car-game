@@ -7,6 +7,7 @@ import {WSService} from "./ws/ws.service";
 import {FormsModule} from "@angular/forms";
 import {TrafficLightModule} from "./traffic-light/traffic-light.module";
 import {NeedPartyModule} from "./need-party/need-party.module";
+import {CarModule} from "./car/car.module";
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {NeedPartyModule} from "./need-party/need-party.module";
     AppRoutingModule,
     FormsModule,
     TrafficLightModule,
-    NeedPartyModule
+    NeedPartyModule,
+    CarModule
   ],
   providers: [WSService],
   bootstrap: [AppComponent]

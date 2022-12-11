@@ -1,40 +1,34 @@
 import {Component, OnInit} from '@angular/core';
 import {WSService} from "./ws/ws.service";
 import {TrafficLightEvent} from "./models/trafficLightType";
-import {take} from "rxjs";
+import {filter, take} from "rxjs";
+import {Cars} from "./models/action";
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
   type = ""
-  constructor(private readonly wsService: WSService) {}
+  constructor(public readonly wsService: WSService) {}
 
   ngOnInit(): void {
-
-  }
-
-  newGame() {
-    this.wsService.ws.next({
-      command: 'NEW_GAME',
-      role: this.type
-    })
-  }
-
-  join() {
-    this.wsService.wsSubject.next({
-      command: 'JOIN'
-    })
+    this.wsService.ws
+    // @ts-ignore
+      .pipe(filter<Cars>(el => el.type==="cars"))
+      .subscribe((cars: Cars) => {
+        console.log(cars)
+      })
   }
 
   setTrafficEvent(event: TrafficLightEvent) {
-    this.wsService.wsSubject.next({
+    this.wsService.ws.next({
       command: "COMMAND",
       func: "setTrafficLight",
-      arg: event
+      arg: event,
+      id: this.wsService.id
     })
-    console.log(event)
   }
+
+
 }
