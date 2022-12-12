@@ -2,9 +2,13 @@ import {WebSocket} from "ws";
 import {Car} from "./car";
 import {TrafficLight} from "./traffic-light";
 
+type role = "SENDER" | "ROUTER"
+
 export class Party {
   sender: WebSocket | undefined
   router: WebSocket | undefined
+
+  messageHistory: string[] = []
 
   id: string = ""
 
@@ -20,6 +24,7 @@ export class Party {
       this.setRouter(client)
     this.addCars(4)
     this.setId(id)
+    this.sendToPlayers({id, role, type: "id"})
   }
 
   setSender(client: WebSocket): Party {
@@ -32,6 +37,11 @@ export class Party {
     this.router = client
     this.sender && this.play()
     return this
+  }
+
+  message({msg, from}: {msg: string, from: string}) {
+    this.messageHistory.push(msg)
+    this.sendToPlayers({msg, from, type: "msg"})
   }
 
   roleNeed() {
@@ -92,10 +102,12 @@ export class Party {
 
   private setId(id: string) {
     this.id = id
-    this.sendToPlayers({id})
   }
 
   private play() {
-    this.sendToPlayers(this.cars)
+    this.sendToPlayers({
+      type: "cars",
+      cars: this.cars
+    })
   }
 }
