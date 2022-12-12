@@ -1,10 +1,10 @@
-type role = "SENDER" | "ROLE"
+export type role = "SENDER" | "ROLE"
 
 interface Action {
   type: string
 }
 
-interface Car {
+export interface Car {
   x: number;
   y: number;
   speed: number;
@@ -14,8 +14,9 @@ export interface Cars extends Action {
   cars: Car[]
 }
 
-export interface Id extends Action {
+export interface Connect extends Action {
   id: string
+  role: role
 }
 
 export interface Need {
@@ -26,4 +27,9 @@ export interface Need {
 export interface Needs extends Action {
   number_parties: number,
   needs: Need[]
+}
+
+export interface Messages extends Action {
+  msg: string,
+  from: string
 }
