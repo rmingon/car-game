@@ -13,12 +13,7 @@ export class AppComponent implements OnInit {
   constructor(public readonly wsService: WSService) {}
 
   ngOnInit(): void {
-    this.wsService.ws
-    // @ts-ignore
-      .pipe(filter<Cars>(el => el.type==="cars"))
-      .subscribe((cars: Cars) => {
-        console.log(cars)
-      })
+
   }
 
   setTrafficEvent(event: TrafficLightEvent) {

@@ -8,6 +8,7 @@ import {FormsModule} from "@angular/forms";
 import {TrafficLightModule} from "./traffic-light/traffic-light.module";
 import {NeedPartyModule} from "./need-party/need-party.module";
 import {CarModule} from "./car/car.module";
+import {MessageModule} from "./message/message.module";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {CarModule} from "./car/car.module";
     FormsModule,
     TrafficLightModule,
     NeedPartyModule,
-    CarModule
+    CarModule,
+    MessageModule
   ],
   providers: [WSService],
   bootstrap: [AppComponent]
