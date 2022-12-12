@@ -8,6 +8,9 @@ import { CarComponent } from './car.component';
   declarations: [
     CarComponent
   ],
+  exports: [
+    CarComponent
+  ],
   imports: [
     CommonModule
   ]
