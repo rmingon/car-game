@@ -1,6 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {WSService} from "../ws/ws.service";
 import {Car} from "../models/action";
+import {map} from "rxjs";
+
+const VEHICLES_TO_IMG: {[key: string]: string} =  {
+  truck: './../../assets/vehicles/white-truck.png',
+  car: './../../assets/vehicles/blue-car.png',
+}
 
 @Component({
   selector: 'app-car',
@@ -14,8 +20,8 @@ export class CarComponent implements OnInit {
 
   ngOnInit() {
     this.wsService.cars?.subscribe(cars => {
-      console.log(cars)
       this.cars = cars.cars
+      this.cars.map(car => car.img = VEHICLES_TO_IMG[car.type] )
     })
   }
 

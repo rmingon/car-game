@@ -1,8 +1,11 @@
-<input type="text" placeholder="message" [(ngModel)]="msg"/>
-<input type="submit" class="border-2 cursor-pointer" (click)="sendMessage()">
-<div>
-  <div *ngFor="let message of messages">
-    {{ message.from }}
-    {{ message.msg }}
+<div class="w-8">
+
+  <input type="textarea" placeholder="message" [(ngModel)]="msg" class="border-2"/>
+  <input type="submit" class="btn-primary" value="SEND MSG" (click)="sendMessage()">
+  <div>
+    <div *ngFor="let message of messages">
+      {{ message.from }}
+      {{ message.msg }}
+    </div>
   </div>
 </div>
