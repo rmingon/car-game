@@ -1,7 +1,7 @@
 import {Injectable, OnInit} from '@angular/core';
 import { webSocket } from "rxjs/webSocket";
 import {filter, map, Observable, pipe, Subject, Subscribable} from "rxjs";
-import {Cars, Connect, Messages, Needs, role} from "../models/action";
+import {Car, Cars, Connect, Messages, Needs, role} from "../models/action";
 
 @Injectable({
   providedIn: 'root'

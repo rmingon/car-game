@@ -16,7 +16,6 @@ export class MessageComponent implements OnInit {
 
   ngOnInit() {
     this.wsService.messages?.subscribe(msg => {
-      console.log(msg)
       this.messages.push(msg)
     })
   }
