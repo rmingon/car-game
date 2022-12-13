@@ -8,6 +8,8 @@ export interface Car {
   x: number;
   y: number;
   speed: number;
+  type: string;
+  img: string;
 }
 
 export interface Cars extends Action {
