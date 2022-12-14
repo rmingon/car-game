@@ -9,10 +9,12 @@ import {TrafficLightModule} from "./traffic-light/traffic-light.module";
 import {NeedPartyModule} from "./need-party/need-party.module";
 import {CarModule} from "./car/car.module";
 import {MessageModule} from "./message/message.module";
+import { DirectionComponent } from './direction/direction.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    DirectionComponent,
   ],
   imports: [
     BrowserModule,
