@@ -1,7 +1,8 @@
 <div class="absolute bottom-0 right-0">
   <div *ngFor="let car of cars">
     <span>
-      <button>Car {{car.x}}</button>
-    </span><br>
+      <button>{{car.type}}</button>
+      <img src="{{ car.img }}">
+    </span>
   </div>
 </div>
