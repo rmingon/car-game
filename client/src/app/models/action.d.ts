@@ -1,5 +1,9 @@
 export type role = "SENDER" | "ROLE"
 
+interface sendCarEvent {
+  direction: string;
+}
+
 interface Action {
   type: string
 }
