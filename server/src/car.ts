@@ -5,6 +5,8 @@ export class Car {
   y: number = 50
   speed: number = 10
   type: "truck" | "car" = "car"
+  direction: direction = "top"
+  drive: boolean = false
 
   constructor() {
     this.type = TYPE_OF_VEHICULE[Math.floor(Math.random() * TYPE_OF_VEHICULE.length)]
