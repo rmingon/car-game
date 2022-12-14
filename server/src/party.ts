@@ -2,8 +2,6 @@ import {WebSocket} from "ws";
 import {Car} from "./car";
 import {TrafficLight} from "./traffic-light";
 
-type role = "SENDER" | "ROUTER"
-
 export class Party {
   sender: WebSocket | undefined
   router: WebSocket | undefined
@@ -15,6 +13,8 @@ export class Party {
   state: "wait" | "play" = "wait"
 
   protected cars: Car[] = []
+  protected drivenCars: Car[] = []
+
   protected traffics_lights : TrafficLight[] = []
 
   constructor(role: string, client: WebSocket, id : string) {
@@ -22,7 +22,6 @@ export class Party {
       this.setSender(client)
     if (role === "ROUTER")
       this.setRouter(client)
-    this.addCars(4)
     this.setId(id)
     this.sendToPlayers({id, role, type: "id"})
   }
@@ -83,6 +82,15 @@ export class Party {
     return this
   }
 
+  sendCar({from}: {from: direction}) {
+    const car = this.cars.pop()
+    if (car) {
+      car.drive = true
+      car.direction = from
+      this.drivenCars.push(car)
+    }
+  }
+
   setTrafficLight({state, position}: {state: string, position: number}) {
     console.log(state, position)
   }
@@ -95,7 +103,7 @@ export class Party {
     return this.cars.at(index)
   }
 
-  sendToPlayers(data: object | object[]) {
+  sendToPlayers(data: object) {
     this.sender && this.sender.send(JSON.stringify(data))
     this.router && this.router.send(JSON.stringify(data))
   }
@@ -105,6 +113,8 @@ export class Party {
   }
 
   private play() {
+    this.addCars(4)
+    this.addTrafficsLights(4)
     this.sendToPlayers({
       type: "cars",
       cars: this.cars
