@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {WSService} from "../ws/ws.service";
-import {Car} from "../models/action";
+import {Car} from "../action";
 import {map} from "rxjs";
 
 const VEHICLES_TO_IMG: {[key: string]: string} =  {
