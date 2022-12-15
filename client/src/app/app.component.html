@@ -23,7 +23,7 @@
       <div class="flex ">
         <div class="bg-green-400 w-44 h-44 mr-6 rounded-br-xl mb-6">
           <div class="flex justify-end items-end">
-            <app-direction></app-direction>
+            <app-direction [direction]="'top'" (insertion)="setCarEvent($event)"></app-direction>
           </div>
           <div class="flex justify-end items-end">
             <app-traffic-light [number]="1" [state]="'red'" (traffic)="setTrafficEvent($event)" ></app-traffic-light>
@@ -32,7 +32,7 @@
         <div class="border-2 border-white border-dashed"></div>
         <div class="bg-green-400 w-44 h-44 rounded-bl-xl ml-6 mb-6">
           <div class="flex justify-end items-end">
-            <app-direction [direction]="'top'"></app-direction>
+            <app-direction [direction]="'right'" (insertion)="setCarEvent($event)"></app-direction>
           </div>
           <div class="flex">
             <app-traffic-light class="rotate-90" [number]="2" [state]="'red'" (traffic)="setTrafficEvent($event)"></app-traffic-light>
@@ -41,21 +41,21 @@
       </div>
       <div class="border-2 border-white border-dashed"></div>
       <div class="flex">
-        <div class="bg-green-400 w-44 h-44 mr-6 rounded-tr-xl mt-6 p-2 flex flex-col justify-between items-end">
+        <div class="bg-green-400 w-44 h-44 mr-6 rounded-tr-xl mt-6 p-2 flex justify-between">
           <div>
-            <app-traffic-light class="rotate-90" [number]="3" [state]="'red'" (traffic)="setTrafficEvent($event)"></app-traffic-light>
+            <app-direction [direction]="'left'"  (insertion)="setCarEvent($event)"></app-direction>
           </div>
           <div>
-            <app-direction class="rotate-90"></app-direction>
+            <app-traffic-light [number]="3" [state]="'red'" (traffic)="setTrafficEvent($event)"></app-traffic-light>
           </div>
         </div>
         <div class="border-2 border-white border-dashed"></div>
-        <div class="bg-green-400 w-44 h-44 rounded-tl-xl ml-6 mt-6 p-2 flex justify-between">
+        <div class="bg-green-400 w-44 h-44 rounded-tl-xl ml-6 mt-6 p-2 flex flex-col">
           <div>
             <app-traffic-light [number]="4" [state]="'red'" (traffic)="setTrafficEvent($event)"></app-traffic-light>
           </div>
           <div>
-            <app-direction class="rotate-90"></app-direction>
+            <app-direction [direction]="'bottom'" (insertion)="setCarEvent($event)"></app-direction>
           </div>
         </div>
       </div>
