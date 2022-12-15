@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {WSService} from "../ws/ws.service";
-import {Messages} from "../models/action";
+import {Messages} from "../action";
 
 @Component({
   selector: 'app-message',

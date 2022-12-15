@@ -1,6 +1,7 @@
 import {WebSocket} from "ws";
 import {Car} from "./car";
 import {TrafficLight} from "./traffic-light";
+import {direction} from "./types";
 
 export class Party {
   sender: WebSocket | undefined
@@ -24,6 +25,7 @@ export class Party {
       this.setRouter(client)
     this.setId(id)
     this.sendToPlayers({id, role, type: "id"})
+    setInterval(this.sendFrame.bind(this), 1000)
   }
 
   setSender(client: WebSocket): Party {
@@ -82,11 +84,10 @@ export class Party {
     return this
   }
 
-  sendCar({from}: {from: direction}) {
+  sendCar({direction}: {direction: direction}) {
     const car = this.cars.pop()
     if (car) {
-      car.drive = true
-      car.direction = from
+      car.roll(direction)
       this.drivenCars.push(car)
     }
   }
@@ -110,6 +111,18 @@ export class Party {
 
   private setId(id: string) {
     this.id = id
+  }
+
+  sendRollCar() : {type: string, cars: Car[]} {
+    this.drivenCars.map(car => {
+      car.x += 1
+      car.y += 1
+    })
+    return {type: 'rollCars', cars: this.drivenCars}
+  }
+
+  sendFrame() {
+    this.sendToPlayers(this.sendRollCar())
   }
 
   private play() {

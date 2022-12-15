@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {WSService} from "../ws/ws.service";
 import {filter} from "rxjs";
-import {Need, Needs} from "../models/action";
+import {Need, Needs} from "../action";
 
 @Component({
   selector: 'app-need-party',
