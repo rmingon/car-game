@@ -14,6 +14,7 @@ interface Car {
   speed: number;
   type: string;
   img: string;
+  rotation: number;
 }
 
 interface Cars extends Action {
@@ -38,4 +39,12 @@ interface Needs extends Action {
 interface Messages extends Action {
   msg: string,
   from: string
+}
+
+interface TrafficLight {
+  state: "red"| "green";
+}
+
+interface TrafficsLights extends Action {
+  trafficsLight: TrafficLight[]
 }
