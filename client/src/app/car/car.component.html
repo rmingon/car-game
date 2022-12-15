@@ -6,3 +6,6 @@
     </span>
   </div>
 </div>
+<div [style.top]="car.y+'px'" [style.left]="car.x+'px'" class="absolute" [ngClass]="'rotate-'+car.rotation" *ngFor="let car of rollCars">
+    <img src="{{ car.img }}">
+</div>
