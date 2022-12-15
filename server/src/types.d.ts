@@ -1,1 +1,0 @@
-type direction = "top" | "right" | "bottom" | "left"

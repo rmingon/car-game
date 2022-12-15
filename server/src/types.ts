@@ -1,0 +1,1 @@
+export type direction = "top" | "right" | "bottom" | "left"
