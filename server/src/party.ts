@@ -25,7 +25,7 @@ export class Party {
       this.setRouter(client)
     this.setId(id)
     this.sendToPlayers({id, role, type: "id"})
-    setInterval(this.sendFrame.bind(this), 1000)
+    setInterval(this.sendFrame.bind(this), 500)
   }
 
   setSender(client: WebSocket): Party {
@@ -90,10 +90,18 @@ export class Party {
       car.roll(direction)
       this.drivenCars.push(car)
     }
+    this.sendToPlayers({
+      type: "cars",
+      cars: this.getCars()
+    })
   }
 
-  setTrafficLight({state, position}: {state: string, position: number}) {
-    console.log(state, position)
+  setTrafficLight({state, position}: {state: "red" | "green", position: number}) {
+    this.traffics_lights[position].state = state
+    this.sendToPlayers({
+      type: "trafficLight",
+      trafficsLight: this.traffics_lights
+    })
   }
 
   getCars() : Car[] {
@@ -115,8 +123,7 @@ export class Party {
 
   sendRollCar() : {type: string, cars: Car[]} {
     this.drivenCars.map(car => {
-      car.x += 1
-      car.y += 1
+      car.move()
     })
     return {type: 'rollCars', cars: this.drivenCars}
   }
