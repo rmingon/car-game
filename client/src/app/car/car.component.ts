@@ -15,6 +15,7 @@ const VEHICLES_TO_IMG: {[key: string]: string} =  {
 })
 export class CarComponent implements OnInit {
   cars: Car[] = []
+  rollCars: Car[] = []
 
   constructor(private readonly wsService: WSService) {}
 
@@ -22,6 +23,10 @@ export class CarComponent implements OnInit {
     this.wsService.cars?.subscribe(cars => {
       this.cars = cars.cars
       this.cars.map(car => car.img = VEHICLES_TO_IMG[car.type] )
+    })
+    this.wsService.roll?.subscribe(cars => {
+      this.rollCars = cars.cars
+      this.rollCars.map(car => car.img = VEHICLES_TO_IMG[car.type] )
     })
   }
 

@@ -1,7 +1,7 @@
 import {Injectable, OnInit} from '@angular/core';
 import { webSocket } from "rxjs/webSocket";
 import {filter, map, Observable, pipe, Subject, Subscribable} from "rxjs";
-import {Car, Cars, Connect, Messages, Needs, role} from "../action";
+import {Car, Cars, Connect, Messages, Needs, role, TrafficsLights} from "../action";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,9 @@ export class WSService implements OnInit {
 
   messages: Observable<Messages> | undefined
 
-  roll: Observable<Messages> | undefined
+  roll: Observable<Cars> | undefined
+
+  trafficLight: Observable<TrafficsLights> | undefined
 
   constructor() {
 
@@ -42,7 +44,11 @@ export class WSService implements OnInit {
 
     this.roll = this.ws
       // @ts-ignore
-      .pipe(filter<Messages>(el => el.type==="rollCars"))
+      .pipe(filter<Cars>(el => el.type==="rollCars"))
+
+    this.trafficLight = this.ws
+      // @ts-ignore
+      .pipe(filter<TrafficsLights>(el => el.type==="trafficLight"))
 
   }
 
