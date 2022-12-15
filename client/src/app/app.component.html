@@ -1,5 +1,4 @@
 <app-need-party *ngIf="!wsService.id"></app-need-party>
-<app-car></app-car>
 <div class="flex h-full">
   <div class="flex flex-col w-1/6 px-2">
     <div *ngIf="!wsService.id">
@@ -19,7 +18,8 @@
     </div>
   </div>
   <div class="w-5/6">
-    <div class="flex flex-col bg-gray-300 w-96 h-[25rem]">
+    <div class="relative flex flex-col bg-gray-300 w-96 h-[25rem]">
+      <app-car></app-car>
       <div class="flex ">
         <div class="bg-green-400 w-44 h-44 mr-6 rounded-br-xl mb-6">
           <div class="flex justify-end items-end">
@@ -31,11 +31,11 @@
         </div>
         <div class="border-2 border-white border-dashed"></div>
         <div class="bg-green-400 w-44 h-44 rounded-bl-xl ml-6 mb-6">
-          <div class="flex justify-end items-end">
+          <div class="flex">
             <app-direction [direction]="'right'" (insertion)="setCarEvent($event)"></app-direction>
           </div>
           <div class="flex">
-            <app-traffic-light class="rotate-90" [number]="2" [state]="'red'" (traffic)="setTrafficEvent($event)"></app-traffic-light>
+            <app-traffic-light [number]="2" [state]="'red'" (traffic)="setTrafficEvent($event)"></app-traffic-light>
           </div>
         </div>
       </div>
