@@ -15,6 +15,8 @@ interface Car {
   type: string;
   img: string;
   rotation: number;
+  width: number;
+  height: number;
 }
 
 interface Cars extends Action {
