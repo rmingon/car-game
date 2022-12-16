@@ -26,6 +26,7 @@ export class Party {
     this.setId(id)
     this.sendToPlayers({id, role, type: "id"})
     setInterval(this.sendFrame.bind(this), 500)
+    setInterval(this.checkForColision.bind(this), 500)
   }
 
   setSender(client: WebSocket): Party {
@@ -121,15 +122,24 @@ export class Party {
     this.id = id
   }
 
-  sendRollCar() : {type: string, cars: Car[]} {
+  rollCar() : Car[] {
     this.drivenCars.map(car => {
       car.move()
     })
-    return {type: 'rollCars', cars: this.drivenCars}
+    return this.drivenCars
   }
 
   sendFrame() {
-    this.sendToPlayers(this.sendRollCar())
+    this.sendToPlayers({
+      type: 'rollCars',
+      cars: this.rollCar()
+    })
+  }
+
+  checkForColision() {
+    this.rollCar().forEach(car => {
+      console.log(car.getHitBox())
+    })
   }
 
   private play() {
