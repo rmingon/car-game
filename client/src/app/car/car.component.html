@@ -7,5 +7,8 @@
   </div>
 </div>
 <div [style.top]="car.y+'px'" [style.left]="car.x+'px'" class="absolute" [ngClass]="'rotate-'+car.rotation" *ngFor="let car of rollCars">
-    <img src="{{ car.img }}">
+  <img src="{{ car.img }}">
+</div>
+<div [style.top]="car.y+'px'" [style.left]="car.x+'px'" class="absolute" [ngClass]="'rotate-'+car.rotation" *ngFor="let car of rollCars">
+  <div [style.width]="car.width+'px'" [style.height]="car.height+'px'" class="border-2" ></div>
 </div>
