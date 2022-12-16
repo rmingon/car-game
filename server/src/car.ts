@@ -1,44 +1,56 @@
 const TYPE_OF_VEHICULE = <const>["truck", "car"]
-import {direction} from "./types";
+import {Area, direction} from "./types";
+
+const SPEED_BY_VEHICULE = {
+  truck: 3,
+  car: 5
+}
+const SIZE_BY_VEHICULE :  { [k: string]: [number, number] } = {
+  truck: [22, 50], // DEPEND IF CAR UP AND DOWN OR LEFT AND RIGHT
+  car: [18, 40]
+}
 
 export class Car {
   x: number = 0
   y: number = 0
+  width: number = 0
+  height: number = 0
   rotation: number = 0
   speed: number = 0
   type: "truck" | "car" = "car"
   direction: direction = "top"
   drive: boolean = false
+  area: Area | undefined
 
   private _move = {
     top: () => {
-      this.y += 1 * this.speed
+      this.y += Math.round(1 * this.speed)
     },
     right: () => {
-      this.x -= 1 * this.speed
+      this.x -= Math.round(1 * this.speed)
     },
     bottom: () => {
-      this.y -= 1 * this.speed
+      this.y -= Math.round(1 * this.speed)
     },
     left: () => {
-      this.x += 1 * this.speed
+      this.x += Math.round(1 * this.speed)
     }
   }
 
   private _position = {
     top: () => {
       this.rotation = 180
-      this.x = 200
+      this.x = 166
     },
     right: () => {
       this.rotation = 90
-      this.y = 200
-      this.x = 400
+      this.y = 170
+      this.x = 370
     },
     bottom: () => {
       this.rotation = 0
       this.y = 400
-      this.x = 200
+      this.x = 195
     },
     left: () => {
       this.rotation = 270
@@ -54,7 +66,14 @@ export class Car {
     this.direction = direction
     this._position[direction]()
     this.drive = true
-    this.speed = 2
+    if (direction === "top" || direction === "bottom") {
+      this.width = SIZE_BY_VEHICULE[this.type][0]
+      this.height = SIZE_BY_VEHICULE[this.type][1]
+    } else {
+      this.width = SIZE_BY_VEHICULE[this.type][1]
+      this.height = SIZE_BY_VEHICULE[this.type][0]
+    }
+    this.speed = SPEED_BY_VEHICULE[this.type]
   }
 
   stop() {
@@ -64,5 +83,15 @@ export class Car {
 
   move() {
     this._move[this.direction]()
+  }
+
+  getHitBox() {
+    this.area = {
+      TL: [this.x, this.y],
+      TR: [this.x, this.y + this.height],
+      BL: [this.x + this.width, this.y],
+      BR: [this.x + this.width, this.y + this.height],
+    }
+    return this.area
   }
 }
