@@ -21,21 +21,21 @@
     <div class="relative flex flex-col bg-gray-300 w-96 h-[25rem]">
       <app-car></app-car>
       <div class="flex ">
-        <div class="bg-green-400 w-44 h-44 mr-6 rounded-br-xl mb-6">
-          <div class="flex justify-end items-end">
+        <div class="bg-green-400 w-44 h-44 mr-6 rounded-br-xl mb-6 p-2 flex flex-col justify-between items-end">
+          <div class="">
             <app-direction [direction]="'top'" (insertion)="setCarEvent($event)"></app-direction>
           </div>
-          <div class="flex justify-end items-end">
+          <div class="">
             <app-traffic-light [number]="1" [state]="'red'" (traffic)="setTrafficEvent($event)" ></app-traffic-light>
           </div>
         </div>
         <div class="border-2 border-white border-dashed"></div>
-        <div class="bg-green-400 w-44 h-44 rounded-bl-xl ml-6 mb-6">
-          <div class="flex">
-            <app-direction [direction]="'right'" (insertion)="setCarEvent($event)"></app-direction>
-          </div>
-          <div class="flex">
+        <div class="bg-green-400 w-44 h-44 rounded-bl-xl ml-6 mb-6 flex justify-between items-end p-2">
+          <div>
             <app-traffic-light [number]="2" [state]="'red'" (traffic)="setTrafficEvent($event)"></app-traffic-light>
+          </div>
+          <div>
+            <app-direction [direction]="'right'" (insertion)="setCarEvent($event)"></app-direction>
           </div>
         </div>
       </div>
@@ -50,7 +50,7 @@
           </div>
         </div>
         <div class="border-2 border-white border-dashed"></div>
-        <div class="bg-green-400 w-44 h-44 rounded-tl-xl ml-6 mt-6 p-2 flex flex-col">
+        <div class="bg-green-400 w-44 h-44 rounded-tl-xl ml-6 mt-6 p-2 flex flex-col justify-between">
           <div>
             <app-traffic-light [number]="4" [state]="'red'" (traffic)="setTrafficEvent($event)"></app-traffic-light>
           </div>
