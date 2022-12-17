@@ -1,5 +1,5 @@
 const TYPE_OF_VEHICULE = <const>["truck", "car"]
-import {Area, direction} from "./types";
+import {Area, direction, Position} from "./types";
 
 const SPEED_BY_VEHICULE = {
   truck: 3,
@@ -39,7 +39,7 @@ export class Car {
 
   private _position = {
     top: () => {
-      this.rotation = 180
+      this.rotation = 0
       this.x = 166
     },
     right: () => {
@@ -48,13 +48,13 @@ export class Car {
       this.x = 370
     },
     bottom: () => {
-      this.rotation = 0
+      this.rotation = 180
       this.y = 400
       this.x = 195
     },
     left: () => {
       this.rotation = 270
-      this.y = 180
+      this.y = 205
     },
   }
 
@@ -85,13 +85,10 @@ export class Car {
     this._move[this.direction]()
   }
 
-  getHitBox() {
-    this.area = {
+  getHitBox() : Position {
+    return {
       TL: [this.x, this.y],
-      TR: [this.x, this.y + this.height],
-      BL: [this.x + this.width, this.y],
-      BR: [this.x + this.width, this.y + this.height],
+      BR: [this.x + this.width, this.y + this.height]
     }
-    return this.area
   }
 }
