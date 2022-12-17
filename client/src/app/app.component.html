@@ -21,7 +21,7 @@
     <div class="relative flex flex-col bg-gray-300 w-96 h-[25rem]">
       <app-car></app-car>
       <div class="flex ">
-        <div class="bg-green-400 w-44 h-44 mr-6 rounded-br-xl mb-6 p-2 flex flex-col justify-between items-end">
+        <div class="bg-green-400 border-r-2 border-b-2 border-gray-800 w-44 h-44 mr-6 rounded-br-xl mb-6 p-2 flex flex-col justify-between items-end">
           <div class="">
             <app-direction [direction]="'top'" (insertion)="setCarEvent($event)"></app-direction>
           </div>
@@ -30,7 +30,7 @@
           </div>
         </div>
         <div class="border-2 border-white border-dashed"></div>
-        <div class="bg-green-400 w-44 h-44 rounded-bl-xl ml-6 mb-6 flex justify-between items-end p-2">
+        <div class="bg-green-400 border-l-2 border-b-2 border-gray-800 w-44 h-44 rounded-bl-xl ml-6 mb-6 flex justify-between items-end p-2">
           <div>
             <app-traffic-light [number]="2" [state]="'red'" (traffic)="setTrafficEvent($event)"></app-traffic-light>
           </div>
@@ -41,7 +41,7 @@
       </div>
       <div class="border-2 border-white border-dashed"></div>
       <div class="flex">
-        <div class="bg-green-400 w-44 h-44 mr-6 rounded-tr-xl mt-6 p-2 flex justify-between">
+        <div class="bg-green-400 border-r-2 border-t-2 border-gray-800 w-44 h-44 mr-6 rounded-tr-xl mt-6 p-2 flex justify-between">
           <div>
             <app-direction [direction]="'left'"  (insertion)="setCarEvent($event)"></app-direction>
           </div>
@@ -50,7 +50,7 @@
           </div>
         </div>
         <div class="border-2 border-white border-dashed"></div>
-        <div class="bg-green-400 w-44 h-44 rounded-tl-xl ml-6 mt-6 p-2 flex flex-col justify-between">
+        <div class="bg-green-400 border-l-2 border-t-2 border-gray-800 w-44 h-44 rounded-tl-xl ml-6 mt-6 p-2 flex flex-col justify-between">
           <div>
             <app-traffic-light [number]="4" [state]="'red'" (traffic)="setTrafficEvent($event)"></app-traffic-light>
           </div>
