@@ -6,3 +6,8 @@ export interface Area {
   BL: [number, number],
   BR: [number, number],
 }
+
+export interface Position {
+  TL: [number, number],
+  BR: [number, number],
+}
