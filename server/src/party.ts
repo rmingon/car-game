@@ -1,7 +1,7 @@
 import {WebSocket} from "ws";
 import {Car} from "./car";
 import {TrafficLight} from "./traffic-light";
-import {direction} from "./types";
+import {Area, direction, Position} from "./types";
 
 export class Party {
   sender: WebSocket | undefined
@@ -26,7 +26,7 @@ export class Party {
     this.setId(id)
     this.sendToPlayers({id, role, type: "id"})
     setInterval(this.sendFrame.bind(this), 500)
-    setInterval(this.checkForColision.bind(this), 500)
+    // setInterval(this.checkForColision.bind(this), 500)
   }
 
   setSender(client: WebSocket): Party {
@@ -134,11 +134,29 @@ export class Party {
       type: 'rollCars',
       cars: this.rollCar()
     })
+    this.checkForColision()
+  }
+
+  hitboxChecker(first: Position, second: Position) : boolean {
+    if (
+      (first.TL[1] < second.BR[1]) && (first.TL[1] > second.TL[1]) &&
+      (first.TL[0] < second.BR[0]) && (first.TL[0] > second.TL[0])
+    ) {
+      return true
+    }
+    return false
   }
 
   checkForColision() {
-    this.rollCar().forEach(car => {
-      console.log(car.getHitBox())
+    const rollCars = this.rollCar()
+    rollCars.forEach(car => {
+      const hitBox = car.getHitBox()
+      const rollCarsWithoutHerself = rollCars.filter(car => JSON.stringify(car.getHitBox()) !== JSON.stringify(hitBox)) // remove herself
+      rollCarsWithoutHerself.forEach(car => {
+        const asColision = this.hitboxChecker(hitBox, car.getHitBox())
+        if (asColision)
+          rollCars.forEach(car => car.stop())
+      })
     })
   }
 
