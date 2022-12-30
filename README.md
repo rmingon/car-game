@@ -29,6 +29,7 @@ cd ./server && npm run start:dev
 - [x] Backend ws
 - [x] Collision between cars
 - [x] Traffic light ws
+- [x] Chat between players
 - [ ] Traffic light stop car
 - [ ] Game over alert
 - [ ] Multilevel
